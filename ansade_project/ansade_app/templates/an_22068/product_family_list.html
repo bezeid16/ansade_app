@@ -1,0 +1,9 @@
+<!-- ansade_app/templates/ansade_app/product_family_list.html -->
+
+<h2>Liste des familles de produits</h2>
+<ul>
+  {% for family in families %}
+    <li><a href="{% url 'product_family_detail' pk=family.pk %}">{{ family.name }}</a></li>
+  {% endfor %}
+</ul>
+<a href="{% url 'product_family_create' %}">Créer une nouvelle famille de produits</a>

@@ -1,0 +1,9 @@
+<!-- ansade_app/templates/ansade_app/product_family_form.html -->
+
+<h2>Créer une nouvelle famille de produits</h2>
+<form method="post" action="{% url 'product_family_create' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Enregistrer</button>
+</form>
+<a href="{% url 'product_family_list' %}">Retour à la liste des familles de produits</a>

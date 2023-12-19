@@ -1,0 +1,6 @@
+<!-- ansade_app/templates/ansade_app/product_family_detail.html -->
+
+<h2>Détail de la famille de produits</h2>
+<p>Nom : {{ family.name }}</p>
+<a href="{% url 'product_family_update' pk=family.pk %}">Modifier</a>
+<a href="{% url 'product_family_delete' pk=family.pk %}">Supprimer</a>

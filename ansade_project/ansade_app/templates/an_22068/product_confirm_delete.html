@@ -1,0 +1,9 @@
+<!-- ansade_app/templates/ansade_app/product_form.html -->
+
+<h2>Modifier le produit</h2>
+<form method="post" action="{% url 'product_update' pk=product.pk %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Enregistrer les modifications</button>
+</form>
+<a href="{% url 'product_list' %}">Retour à la liste des produits</a>
