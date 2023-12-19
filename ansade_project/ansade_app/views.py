@@ -9,7 +9,9 @@ def home(request):
     mymsg = request.GET.get('message')
     return render(request, 'home.html', {'user_message': mymsg})
 
-# ... Vues pour les produits (Product) ...
+def list(request):
+    mymsg = request.GET.get('message')
+    return render(request, 'home.html', {'user_message': mymsg})
 
 class ProductList(ListView):
     model = Product
@@ -31,7 +33,6 @@ class ProductUpdate(UpdateView):
     fields = '__all__'
     success_url = reverse_lazy('product_list')
 
-# ... Vues pour les familles de produits (ProductFamily) ...
 
 class ProductFamilyList(ListView):
     model = ProductFamily

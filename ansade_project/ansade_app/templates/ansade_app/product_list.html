@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}<title>produits</title>{% endblock %}
+
+{% block content %}
+
+
+<div class="text-end pt-5"> <a href="/department/add" class="btn btn-primary">Add produit</a></div>
+<h1 class="text-center">Liste des produits</h1>
+
+{% if department_list %}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">name</th>
+        <th scope="col">description</th>
+        <th scope="col">family</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for w in department_list %}
+      <tr>
+        <th scope="row">{{ w.id }}</th>
+        <td>{{ w.code }}</td>
+        <td>{{ w.name }}</td>
+        <td>
+          <a href="/department/{{ w.id }}" class="btn btn-info">View</a> | <a href="/department/update/{{ w.id }}" class="btn btn-primary">Edit</a> | <a href="/department/delete/{{ w.id }}" class="btn btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>There are no produits in the database.</p>
+{% endif %}
+{% endblock %}

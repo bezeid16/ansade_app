@@ -1,9 +1,0 @@
-<!-- ansade_app/templates/ansade_app/product_list.html -->
-
-<h2>Liste des produits</h2>
-<ul>
-  {% for product in products %}
-    <li><a href="{% url 'product_detail' pk=product.pk %}">{{ product.name }}</a></li>
-  {% endfor %}
-</ul>
-<a href="{% url 'product_create' %}">Créer un nouveau produit</a>
