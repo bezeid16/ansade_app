@@ -1,9 +1,13 @@
-<!-- ansade_app/templates/ansade_app/product_family_form.html -->
+{% extends "base.html" %}
 
-<h2>Modifier la famille de produits</h2>
-<form method="post" action="{% url 'product_family_update' pk=family.pk %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Enregistrer les modifications</button>
+{% block title %}<title>ProductFamily</title>{% endblock %}
+
+{% block content %}
+
+<form action="" method="post" class="p-5 text-center">
+    {% csrf_token %}
+    <p class="h5 p-3">Are you sure you want to delete "{{ object }}"?</p>
+    <input type="submit" value="Confirm" class="btn btn-danger"/>
 </form>
-<a href="{% url 'product_family_list' %}">Retour à la liste des familles de produits</a>
+
+{% endblock %}
