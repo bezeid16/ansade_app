@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'ansade_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'smdb',
+        'NAME': 'ansadedb',
         'USER': 'root',
         'PASSWORD' : '',
     }
