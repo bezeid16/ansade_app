@@ -1,0 +1,13 @@
+<!-- ansade_app/templates/ansade_app/panier_form.html -->
+
+{% extends 'ansade_app/base.html' %}
+
+{% block content %}
+  <h2>{% if panier.id %}Edit{% else %}Add{% endif %} Basket</h2>
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Save</button>
+  </form>
+  <a href="{% url 'panier_list' %}" class="btn btn-primary">Back to List</a>
+{% endblock %}

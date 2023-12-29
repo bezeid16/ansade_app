@@ -1,0 +1,13 @@
+<!-- ansade_app/templates/ansade_app/panier_confirm_delete.html -->
+
+{% extends 'ansade_app/base.html' %}
+
+{% block content %}
+  <h2>Confirm Delete</h2>
+  <p>Are you sure you want to delete the basket "{{ panier.label }}"?</p>
+  <form method="post" class="form">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+  </form>
+  <a href="{% url 'panier_list' %}" class="btn btn-primary">Cancel</a>
+{% endblock %}

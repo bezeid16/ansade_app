@@ -1,0 +1,33 @@
+<!-- ansade_app/templates/ansade_app/panierproduit_list.html -->
+{% extends 'ansade_app/base.html' %}
+
+{% block content %}
+  <h2>Panier Produit List</h2>
+  <a class="btn btn-primary mb-2" href="{% url 'panier_produit_create' %}">Add Panier de Produit</a>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Price</th>
+        <th>Panier</th>
+        <th>Ponderation</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for panierproduit in object_list %}
+        <tr>
+          <td>{{ panierproduit.id }}</td>
+          <td>{{ panierproduit.price }}</td>
+          <td>{{ panierproduit.panier }}</td>
+          <td>{{ panierproduit.ponderation }}</td>
+          <td>
+            <a class="btn btn-info btn-sm" href="{% url 'panier_produit_detail' pk=panierproduit.id %}">Detail</a>
+            <a class="btn btn-warning btn-sm" href="{% url 'panier_produit_update' pk=panierproduit.id %}">Edit</a>
+            <a class="btn btn-danger btn-sm" href="{% url 'panier_produit_delete' pk=panierproduit.id %}">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

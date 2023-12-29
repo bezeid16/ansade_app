@@ -1,0 +1,16 @@
+<!-- ansade_app/templates/ansade_app/famille_produit_form.html -->
+
+{% extends 'ansade_app/base.html' %}
+
+{% block title %}Edit Product Family - ANSADE Application{% endblock %}
+
+{% block content %}
+    <div class="container mt-3">
+        <h2>Edit Product Family</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+{% endblock %}

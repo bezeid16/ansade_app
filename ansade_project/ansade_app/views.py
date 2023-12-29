@@ -3,6 +3,12 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import FamilleProduit, Produit, Panier, PanierProduit, Price, PointDeVente
 
+from django.shortcuts import render
+
+def home(request):
+
+    return render(request, 'ansade_app/home.html')
+
 # FamilleProduit Views
 class FamilleProduitListView(ListView):
     model = FamilleProduit
@@ -12,12 +18,12 @@ class FamilleProduitDetailView(DetailView):
 
 class FamilleProduitCreateView(CreateView):
     model = FamilleProduit
-    fields = ['label']
+    fields = '__all__'
     success_url = reverse_lazy('famille_produit_list')  # Redirect to the list view after creating
 
 class FamilleProduitUpdateView(UpdateView):
     model = FamilleProduit
-    fields = ['label']
+    fields = '__all__'
     success_url = reverse_lazy('famille_produit_list')  # Redirect to the list view after updating
 
 class FamilleProduitDeleteView(DeleteView):
@@ -33,12 +39,12 @@ class ProduitDetailView(DetailView):
 
 class ProduitCreateView(CreateView):
     model = Produit
-    fields = ['label', 'price_unit', 'code', 'famille_produit']
+    fields = '__all__'
     success_url = reverse_lazy('produit_list')  # Redirect to the list view after creating
 
 class ProduitUpdateView(UpdateView):
     model = Produit
-    fields = ['label', 'price_unit', 'code', 'famille_produit']
+    fields = '__all__'
     success_url = reverse_lazy('produit_list')  # Redirect to the list view after updating
 
 class ProduitDeleteView(DeleteView):
@@ -54,42 +60,61 @@ class PanierDetailView(DetailView):
 
 class PanierCreateView(CreateView):
     model = Panier
-    fields = ['label', 'code', 'description']
+    fields = '__all__'
     success_url = reverse_lazy('panier_list')  # Redirect to the list view after creating
 
 class PanierUpdateView(UpdateView):
     model = Panier
-    fields = ['label', 'code', 'description']
+    fields = '__all__'
     success_url = reverse_lazy('panier_list')  # Redirect to the list view after updating
 
 class PanierDeleteView(DeleteView):
     model = Panier
     success_url = reverse_lazy('panier_list')  # Redirect to the list view after deleting
 
-# PanierProduit Views
+
+
+class PanierProduitListView(ListView):
+    model = PanierProduit
+    template_name = 'ansade_app/panierproduit_list.html'  # Specify the template name
+
+class PanierProduitDetailView(DetailView):
+    model = PanierProduit
+    template_name = 'ansade_app/panierproduit_detail.html'  # Specify the template name
+
 class PanierProduitCreateView(CreateView):
     model = PanierProduit
-    fields = ['price', 'panier', 'ponderation']
+    template_name = 'ansade_app/panierproduit_form.html'  # Specify the template name
+    fields = '__all__'
     success_url = reverse_lazy('panier_produit_list')  # Redirect to the list view after creating
 
 class PanierProduitUpdateView(UpdateView):
     model = PanierProduit
-    fields = ['price', 'panier', 'ponderation']
+    template_name = 'ansade_app/panierproduit_form.html'  # Specify the template name
+    fields = '__all__'
     success_url = reverse_lazy('panier_produit_list')  # Redirect to the list view after updating
 
 class PanierProduitDeleteView(DeleteView):
     model = PanierProduit
+    template_name = 'ansade_app/panierproduit_confirm_delete.html'  # Specify the template name
     success_url = reverse_lazy('panier_produit_list')  # Redirect to the list view after deleting
 
+
 # Price Views
+class PriceListView(ListView):
+    model = Price
+
+class PriceDetailView(DetailView):
+    model = Price
+
 class PriceCreateView(CreateView):
     model = Price
-    fields = ['value', 'date', 'point_de_vente', 'produit']
+    fields = '__all__'
     success_url = reverse_lazy('price_list')  # Redirect to the list view after creating
 
 class PriceUpdateView(UpdateView):
     model = Price
-    fields = ['value', 'date', 'point_de_vente', 'produit']
+    fields = '__all__'
     success_url = reverse_lazy('price_list')  # Redirect to the list view after updating
 
 class PriceDeleteView(DeleteView):
@@ -115,4 +140,5 @@ class PointDeVenteUpdateView(UpdateView):
 
 class PointDeVenteDeleteView(DeleteView):
     model = PointDeVente
+    fields = ['code', 'wilaya', 'moughtaa', 'commune', 'gps_lat', 'gps_long']
     success_url = reverse_lazy('point_de_vente_list')  # Redirect to the list view after deleting

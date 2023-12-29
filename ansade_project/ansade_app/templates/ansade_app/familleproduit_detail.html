@@ -1,0 +1,13 @@
+<!-- ansade_app/templates/ansade_app/famille_produit_detail.html -->
+
+{% extends 'ansade_app/base.html' %}
+
+{% block title %}Product Family Detail - ANSADE Application{% endblock %}
+
+{% block content %}
+    <div class="container mt-3">
+        <h2>Product Family Detail</h2>
+        <p><strong>ID:</strong> {{ famille_produit.id }}</p>
+        <p><strong>Label:</strong> {{ famille_produit.label }}</p>
+    </div>
+{% endblock %}

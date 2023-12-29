@@ -1,0 +1,20 @@
+<!-- ansade_app/templates/ansade_app/price_detail.html -->
+{% extends 'ansade_app/base.html' %}
+
+{% block content %}
+  <h2>Price Detail</h2>
+  <dl class="row">
+    <dt class="col-sm-3">Value</dt>
+    <dd class="col-sm-9">{{ price.value }}</dd>
+
+    <dt class="col-sm-3">Date</dt>
+    <dd class="col-sm-9">{{ price.date }}</dd>
+
+    <dt class="col-sm-3">Point de Vente</dt>
+    <dd class="col-sm-9">{{ price.point_de_vente }}</dd>
+
+    <dt class="col-sm-3">Produit</dt>
+    <dd class="col-sm-9">{{ price.produit }}</dd>
+  </dl>
+  <a href="{% url 'price_list' %}" class="btn btn-secondary btn-sm">Back to List</a>
+{% endblock %}

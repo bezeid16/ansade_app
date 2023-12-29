@@ -1,0 +1,36 @@
+<!-- ansade_app/templates/ansade_app/familleproduit_list.html -->
+
+{% extends 'ansade_app/base.html' %}
+
+{% block content %}
+
+  <h2>Famille Produit List</h2>
+
+  <!-- Add button to create a new FamilleProduit -->
+  <a class="btn btn-primary mb-2" href="{% url 'famille_produit_create' %}">Add Famille</a>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Label</th>
+        <!-- Add other fields as needed -->
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for famille in object_list %}
+        <tr>
+          <td>{{ famille.id }}</td>
+          <td>{{ famille.label }}</td>
+          <td>
+            <a class="btn btn-info btn-sm" href="{% url 'famille_produit_detail' famille.id %}">Detail</a>
+            <a class="btn btn-warning btn-sm" href="{% url 'famille_produit_update' famille.id %}">Update</a>
+            <a class="btn btn-danger btn-sm" href="{% url 'famille_produit_delete' famille.id %}">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

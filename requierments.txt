@@ -1,0 +1,4 @@
+django
+musqlclient
+django-mysql
+django-bootstrap-v5

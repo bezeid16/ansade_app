@@ -1,0 +1,21 @@
+<!-- ansade_app/templates/ansade_app/panier_detail.html -->
+
+{% extends 'ansade_app/base.html' %}
+
+{% block content %}
+  <h2>Basket Detail</h2>
+  <dl class="row">
+    <dt class="col-sm-3">ID</dt>
+    <dd class="col-sm-9">{{ panier.id }}</dd>
+
+    <dt class="col-sm-3">Label</dt>
+    <dd class="col-sm-9">{{ panier.label }}</dd>
+
+    <dt class="col-sm-3">Code</dt>
+    <dd class="col-sm-9">{{ panier.code }}</dd>
+
+    <dt class="col-sm-3">Description</dt>
+    <dd class="col-sm-9">{{ panier.description }}</dd>
+  </dl>
+  <a href="{% url 'panier_list' %}" class="btn btn-primary">Back to List</a>
+{% endblock %}

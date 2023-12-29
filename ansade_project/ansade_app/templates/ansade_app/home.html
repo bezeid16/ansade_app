@@ -1,0 +1,15 @@
+<!-- templates/home.html -->
+{% extends 'ansade_app/base.html' %}
+
+{% block title %}Page d'Accueil{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">Bienvenue sur notre application!</h1>
+        <p class="lead">Cette application vous permet de gérer les données pour le calcul de l'INPC.</p>
+        <hr class="my-4">
+        <p>Commencez par explorer les différentes fonctionnalités de l'application.</p>
+        <!-- Ajoutez des liens vers d'autres pages si nécessaire -->
+        <a class="btn btn-primary btn-lg" href="{% url 'produit_list' %}" role="button">Voir les Produits</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+<!-- ansade_app/templates/ansade_app/price_confirm_delete.html -->
+{% extends 'ansade_app/base.html' %}
+
+{% block content %}
+  <h2>Delete Price</h2>
+  <p>Are you sure you want to delete the price "{{ price }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, delete</button>
+    <a href="{% url 'price_list' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock %}

@@ -1,0 +1,12 @@
+<!-- ansade_app/templates/ansade_app/point_de_vente_confirm_delete.html -->
+{% extends 'ansade_app/base.html' %}
+
+{% block content %}
+  <h2>Delete Point de Vente</h2>
+  <p>Are you sure you want to delete the point de vente "{{ point }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, delete</button>
+    <a href="{% url 'point_de_vente_list' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock %}

@@ -1,20 +1,44 @@
-<!-- ansade_app/templates/ansade_app/home.html -->
+<!-- ansade_app/templates/ansade_app/base.html -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANSADE Application</title>
+    <title>{% block title %}ANSADE Application{% endblock %}</title>
+    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Your custom CSS styles -->
-    <!-- <link rel="stylesheet" href="{% static 'ansade_app/css/styles.css' %}"> -->
+    <style>
+        /* Customize the navbar styles */
+        nav.navbar {
+            background-color: black;
+        }
+
+        /* Customize the text color in the navbar */
+        nav.navbar a.navbar-brand,
+        nav.navbar a.nav-link {
+            color: white;
+        }
+    </style>
+    <style>
+        /* Customize the navbar styles */
+        nav.navbar.bg-light {
+            background-color: black !important; /* Set the background color to black */
+        }
+
+        /* Customize the text color in the navbar */
+        nav.navbar a.navbar-brand,
+        nav.navbar a.nav-link {
+            color: white !important; /* Set the text color to white */
+        }
+    </style>
 </head>
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">ANSADE App</a>
+        <a class="navbar-brand" href="">ANSADE App</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -30,7 +54,7 @@
                     <a class="nav-link" href="{% url 'panier_list' %}">Baskets</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'panier_produit_list' %}">Basket Items</a>
+                    <a class="nav-link" href="panierproduits">Basket Items</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'price_list' %}">Prices</a>
@@ -43,16 +67,23 @@
         </div>
     </nav>
 
-    <section>
-        <!-- Add additional content or messages here -->
-    </section>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 
     <!-- Bootstrap JS and Popper.js (required for Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Your custom JS scripts -->
-    <!-- <script src="{% static 'ansade_app/js/scripts.js' %}"></script -->
+
+    <footer>
+        <!-- Include common footer content, such as copyright information, links, etc. -->
+        <p>&copy; 2023-2024 22068 ANSADE. All rights reserved.</p>
+    </footer>
+
+    <!-- Include common scripts, such as jQuery, Bootstrap, etc. -->
 
 </body>
 </html>
