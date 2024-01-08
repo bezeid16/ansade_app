@@ -2,7 +2,21 @@
 {% extends 'ansade_app/base.html' %}
 
 {% block content %}
-  <h2>Price List</h2>
+
+
+  <!-- Formulaire d'import Produit -->
+  <form method="post" enctype="multipart/form-data" action="{% url 'price_import' %}">
+    {% csrf_token %}
+    <label for="id_myfile">Sélectionnez un fichier CSV pour l'import Prices :</label>
+    <input type="file" name="myfile" accept=".csv" required>
+    <button type="submit">Importer Prices</button>
+  </form>
+
+  <!-- Lien d'export Produit -->
+  <a href="{% url 'price_export' %}" class="btn btn-info btn-sm">Exporter Prices</a>
+
+  
+  <h2>Prix List</h2>
   <table class="table">
     <thead>
       <tr>

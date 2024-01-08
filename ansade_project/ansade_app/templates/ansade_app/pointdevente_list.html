@@ -2,8 +2,19 @@
 {% extends 'ansade_app/base.html' %}
 
 {% block content %}
+  <!-- Formulaire d'import Produit -->
+  <form method="post" enctype="multipart/form-data" action="{% url 'point_de_vente_import' %}">
+    {% csrf_token %}
+    <label for="id_myfile">Sélectionnez un fichier CSV pour l'import point de ventes :</label>
+    <input type="file" name="myfile" required>
+    <button type="submit">Importer Point de vente</button>
+  </form>
+
+  <!-- Lien d'export Produit -->
+  <a href="{% url 'point_de_vente_export' %}" class="btn btn-info btn-sm">Exporter Point de vente</a>
+
   <h2>Point de Vente List</h2>
-  <a class="btn btn-primary mb-2" href="{% url 'point_de_vente_create' %}" >Add Point de Vente</a>
+  <a class="btn btn-primary mb-2" href="{% url 'point_de_vente_create' %}" >Ajouter une Point de Vente</a>
   <table class="table">
     <thead>
       <tr>

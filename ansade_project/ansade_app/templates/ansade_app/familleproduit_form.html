@@ -6,11 +6,11 @@
 
 {% block content %}
     <div class="container mt-3">
-        <h2>Edit Product Family</h2>
+        <h2>Ajouter ou editer une famille de produit</h2>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" class="btn btn-primary">save</button>
         </form>
     </div>
 {% endblock %}

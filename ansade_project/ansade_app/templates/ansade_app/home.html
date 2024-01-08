@@ -1,15 +1,27 @@
-<!-- templates/home.html -->
+<!-- ansade_app/templates/ansade_app/home.html -->
+
 {% extends 'ansade_app/base.html' %}
-
-{% block title %}Page d'Accueil{% endblock %}
-
+{%load static%}
 {% block content %}
-    <div class="jumbotron">
-        <h1 class="display-4">Bienvenue sur notre application!</h1>
-        <p class="lead">Cette application vous permet de gérer les données pour le calcul de l'INPC.</p>
-        <hr class="my-4">
-        <p>Commencez par explorer les différentes fonctionnalités de l'application.</p>
-        <!-- Ajoutez des liens vers d'autres pages si nécessaire -->
-        <a class="btn btn-primary btn-lg" href="{% url 'produit_list' %}" role="button">Voir les Produits</a>
+    <div style="background-color: #2ecc71; color: #ffffff; padding: 50px; text-align: center;">
+    <img src="{% static '1.png' %}" alt="Logo ANSADE" style="width: 150px; height: auto; margin-bottom: 20px;">
+
+        <h1>Bienvenue sur Ansade app </h1>
+        <p>
+            ANSADE app est une plateforme  pour la gestion efficace et le calcul de l'INPC (Indice National des Prix à la Consommation).
+            Notre mission est de simplifier l'analyse des données et les processus de prise de décision pour les entreprises et les particuliers.
+        </p>
+
+            Fonctionnalités clés :
+        </p>
+        <ul style="list-style-type: none; padding: 0;">
+            <li>Calculs avancés de l'INPC</li>
+            <li>Gestion intuitive des données</li>
+            <li>Outils puissants de prise de décision</li>
+        </ul>
+
+        <p>
+            Visitez le site Web : <a href="https://ansade.mr" style="color: #ffffff; text-decoration: underline;">ansade.mr</a>
+        </p>
     </div>
 {% endblock %}

@@ -3,11 +3,22 @@
 {% extends 'ansade_app/base.html' %}
 
 {% block content %}
+ <!-- Formulaire d'import Produit -->
+ <form method="post" enctype="multipart/form-data" action="{% url 'famille_produit_import' %}">
+  {% csrf_token %}
+  <label for="id_myfile">Sélectionnez un fichier CSV pour l'import famille de produit :</label>
+  <input type="file" name="myfile" required>
+  <button type="submit">Importer famille de produit</button>
+</form>
 
-  <h2>Famille Produit List</h2>
+<!-- Lien d'export Produit -->
+<a href="{% url 'famille_produit_export' %}" class="btn btn-info btn-sm">Exporter famille de produit</a>
+
+
+  <h2>Liste des Familles de Produit </h2>
 
   <!-- Add button to create a new FamilleProduit -->
-  <a class="btn btn-primary mb-2" href="{% url 'famille_produit_create' %}">Add Famille</a>
+  <a class="btn btn-primary mb-2" href="{% url 'famille_produit_create' %}">Ajouter une Famille</a>
 
   <table class="table">
     <thead>

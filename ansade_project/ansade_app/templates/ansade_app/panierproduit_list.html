@@ -2,6 +2,16 @@
 {% extends 'ansade_app/base.html' %}
 
 {% block content %}
+<!-- Formulaire d'import Produit -->
+  <form method="post" enctype="multipart/form-data" action="{% url 'panier_produit_import' %}">
+    {% csrf_token %}
+    <label for="id_myfile">Sélectionnez un fichier CSV pour l'import panier produit</label>
+    <input type="file" name="myfile" required>
+    <button type="submit">Importer panier produit</button>
+  </form>
+<!-- Lien d'export Produit -->
+  <a href="{% url 'panier_produit_export' %}" class="btn btn-info btn-sm">Exporter panier produit</a>
+
   <h2>Panier Produit List</h2>
   <a class="btn btn-primary mb-2" href="{% url 'panier_produit_create' %}">Add Panier de Produit</a>
   <table class="table">

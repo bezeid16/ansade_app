@@ -3,7 +3,21 @@
 {% extends 'ansade_app/base.html' %}
 
 {% block content %}
-  <h2>Product List</h2>
+
+
+  <!-- Formulaire d'import Produit -->
+  <form method="post" enctype="multipart/form-data" action="{% url 'produit_import' %}">
+    {% csrf_token %}
+    <label for="id_myfile">Sélectionnez un fichier CSV pour l'import Produit :</label>
+    <input type="file" name="myfile" required>
+    <button type="submit">Importer Produits</button>
+  </form>
+
+  <!-- Lien d'export Produit -->
+  <a href="{% url 'produit_export' %}">Exporter Produits</a>
+  
+  
+  <h2>liste des produits</h2>
   <table class="table">
     <thead>
       <tr>
@@ -32,5 +46,5 @@
       {% endfor %}
     </tbody>
   </table>
-  <a href="{% url 'produit_create' %}" class="btn btn-success">Add Product</a>
+  <a href="{% url 'produit_create' %}" class="btn btn-success">Ajouter un produit</a>
 {% endblock %}

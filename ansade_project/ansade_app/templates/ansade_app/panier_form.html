@@ -3,7 +3,7 @@
 {% extends 'ansade_app/base.html' %}
 
 {% block content %}
-  <h2>{% if panier.id %}Edit{% else %}Add{% endif %} Basket</h2>
+  <h2>{% if panier.id %}Edit{% else %}Add{% endif %} Panier</h2>
   <form method="post" class="form">
     {% csrf_token %}
     {{ form.as_p }}

@@ -2,8 +2,194 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import FamilleProduit, Produit, Panier, PanierProduit, Price, PointDeVente
-
 from django.shortcuts import render
+from .resources import FamilleProduitResource, ProduitResource ,PanierResource ,PanierProduitResource ,PriceResource ,PointDeVenteResource # Importez d'autres ressources nécessaires
+from django.http import HttpResponse
+from tablib import Dataset
+from django.contrib import messages
+from django.shortcuts import redirect
+import csv
+from . import views 
+#famille produit
+def export_famille_produit(request):
+    famille_produit_resource = FamilleProduitResource()
+    dataset = famille_produit_resource.export()
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="famille_produit.csv"'
+    return response
+
+def import_famille_produit(request):
+    result_message = None
+
+    if request.method == 'POST':
+        famille_produit_resource = FamilleProduitResource()
+        dataset = Dataset()
+        new_famille_produit_file = request.FILES['myfile']
+
+        if not new_famille_produit_file.name.endswith('.csv'):
+            messages.error(request, 'Le fichier doit être un CSV.')
+        else:
+            try:
+                imported_data = dataset.load(new_famille_produit_file.read().decode('utf-8'))
+                famille_produit_resource.import_data(dataset, dry_run=False)
+                messages.success(request, 'Import réussi.')
+            except Exception as e:
+                messages.error(request, f'Une erreur s\'est produite lors de l\'import : {e}')
+
+            result_message = list(messages.get_messages(request))  # Convert messages to a list
+
+    return render(request, 'import_result.html', {'result_message': result_message})
+
+#produit
+def export_produit(request):
+    produit_resource = ProduitResource()
+    dataset = produit_resource.export()
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="produit.csv"'
+    return response
+
+def import_produit(request):
+    result_message = None
+
+    if request.method == 'POST':
+        produit_resource = ProduitResource()
+        dataset = Dataset()
+        new_produit_file = request.FILES['myfile']
+
+        if not new_produit_file.name.endswith('.csv'):
+            messages.error(request, 'Le fichier doit être un CSV.')
+        else:
+            try:
+                imported_data = dataset.load(new_produit_file.read().decode('utf-8'))
+                produit_resource.import_data(dataset, dry_run=False)
+                messages.success(request, 'Import réussi.')
+            except Exception as e:
+                messages.error(request, f'Une erreur s\'est produite lors de l\'import : {e}')
+
+            result_message = list(messages.get_messages(request))  # Convert messages to a list
+
+    return render(request, 'import_result.html', {'result_message': result_message})
+
+#Panier
+def export_Panier(request):
+    Panier_resource = PanierResource()
+    dataset = Panier_resource.export()
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="Panier.csv"'
+    return response
+
+def import_Panier(request):
+    result_message = None
+
+    if request.method == 'POST':
+        Panier_resource = PanierResource()
+        dataset = Dataset()
+        new_Panier_file = request.FILES['myfile']
+
+        if not new_Panier_file.name.endswith('.csv'):
+            messages.error(request, 'Le fichier doit être un CSV.')
+        else:
+            try:
+                imported_data = dataset.load(new_Panier_file.read().decode('utf-8'))
+                Panier_resource.import_data(dataset, dry_run=False)
+                messages.success(request, 'Import réussi.')
+            except Exception as e:
+                messages.error(request, f'Une erreur s\'est produite lors de l\'import : {e}')
+
+            result_message = list(messages.get_messages(request))  # Convert messages to a list
+
+    return render(request, 'import_result.html', {'result_message': result_message})
+
+#PanierProduit
+def export_PanierProduit(request):
+    PanierProduit_resource = PanierProduitResource()
+    dataset = PanierProduit_resource.export()
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="PanierProduit.csv"'
+    return response
+
+def import_PanierProduit(request):
+    result_message = None
+
+    if request.method == 'POST':
+        PanierProduit_resource = PanierProduitResource()
+        dataset = Dataset()
+        new_PanierProduit_file = request.FILES['myfile']
+
+        if not new_PanierProduit_file.name.endswith('.csv'):
+            messages.error(request, 'Le fichier doit être un CSV.')
+        else:
+            try:
+                imported_data = dataset.load(new_PanierProduit_file.read().decode('utf-8'))
+                PanierProduit_resource.import_data(dataset, dry_run=False)
+                messages.success(request, 'Import réussi.')
+            except Exception as e:
+                messages.error(request, f'Une erreur s\'est produite lors de l\'import : {e}')
+
+            result_message = list(messages.get_messages(request))  # Convert messages to a list
+
+    return render(request, 'import_result.html', {'result_message': result_message})
+
+#Price
+def export_Price(request):
+    Price_resource = PriceResource()
+    dataset = Price_resource.export()
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="Price.csv"'
+    return response
+
+def import_Price(request):
+    result_message = None
+
+    if request.method == 'POST':
+        price_resource = PriceResource()
+        dataset = Dataset()
+        new_price_file = request.FILES['myfile']
+
+        if not new_price_file.name.endswith('.csv'):
+            messages.error(request, 'Le fichier doit être un CSV.')
+        else:
+            try:
+                imported_data = dataset.load(new_price_file.read().decode('utf-8'))
+                price_resource.import_data(dataset, dry_run=False)
+                messages.success(request, 'Import réussi.')
+            except Exception as e:
+                messages.error(request, f'Une erreur s\'est produite lors de l\'import : {e}')
+
+            result_message = list(messages.get_messages(request))  # Convert messages to a list
+
+    return render(request, 'import_result.html', {'result_message': result_message})
+
+#PointDeVente
+def export_PointDeVente(request):
+    PointDeVente_resource = PointDeVenteResource()
+    dataset = PointDeVente_resource.export()
+    response = HttpResponse(dataset.csv, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="PointDeVente.csv"'
+    return response
+
+def import_PointDeVente(request):
+    result_message = None
+
+    if request.method == 'POST':
+        PointDeVente_resource = PointDeVenteResource()
+        dataset = Dataset()
+        new_PointDeVente_file = request.FILES['myfile']
+
+        if not new_PointDeVente_file.name.endswith('.csv'):
+            messages.error(request, 'Le fichier doit être un CSV.')
+        else:
+            try:
+                imported_data = dataset.load(new_PointDeVente_file.read().decode('utf-8'))
+                PointDeVente_resource.import_data(dataset, dry_run=False)
+                messages.success(request, 'Import réussi.')
+            except Exception as e:
+                messages.error(request, f'Une erreur s\'est produite lors de l\'import : {e}')
+
+            result_message = list(messages.get_messages(request))  # Convert messages to a list
+
+    return render(request, 'import_result.html', {'result_message': result_message})
+
 
 def home(request):
 

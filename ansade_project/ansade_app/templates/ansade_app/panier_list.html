@@ -3,7 +3,17 @@
 {% extends 'ansade_app/base.html' %}
 
 {% block content %}
-  <h2>Basket List</h2>
+ <!-- Formulaire d'import Produit -->
+ <form method="post" enctype="multipart/form-data" action="{% url 'panier_import' %}">
+  {% csrf_token %}
+  <label for="id_myfile">Sélectionnez un fichier CSV pour l'import panier:</label>
+  <input type="file" name="myfile" required>
+  <button type="submit">Importer panier</button>
+</form>
+<!-- Lien d'export Produit -->
+<a href="{% url 'panier_export' %}" class="btn btn-info btn-sm">Exporter panier</a>
+
+  <h2>panier List</h2>
   <table class="table">
     <thead>
       <tr>
@@ -30,5 +40,5 @@
       {% endfor %}
     </tbody>
   </table>
-  <a href="{% url 'panier_create' %}" class="btn btn-success">Add Basket</a>
+  <a href="{% url 'panier_create' %}" class="btn btn-success">Ajouter un panier</a>
 {% endblock %}
