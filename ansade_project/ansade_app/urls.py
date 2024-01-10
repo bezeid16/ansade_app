@@ -10,12 +10,13 @@ from .views import (
     PanierProduitCreateView, PanierProduitUpdateView, PanierProduitDeleteView,
     PriceListView,PriceDetailView,
     PriceCreateView, PriceUpdateView, PriceDeleteView,
-    PointDeVenteListView, PointDeVenteDetailView, PointDeVenteCreateView, PointDeVenteUpdateView, PointDeVenteDeleteView,
+    PointDeVenteListView, PointDeVenteDetailView, PointDeVenteCreateView, PointDeVenteUpdateView, PointDeVenteDeleteView,ProductPriceChart
 )
 
 urlpatterns = [
 
     path('', views.home, name='home'),
+    path('evolution-prix/<int:product_id>/', ProductPriceChart.as_view(), name='product_price_chart'),
 
 
 

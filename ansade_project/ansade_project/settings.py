@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'import_export',
     'django.contrib.staticfiles',
-    'ansade_app'
+    'ansade_app',
+    'chartjs'
 ]
 
 MIDDLEWARE = [

@@ -9,7 +9,19 @@ from tablib import Dataset
 from django.contrib import messages
 from django.shortcuts import redirect
 import csv
-from . import views 
+from django.views.generic import TemplateView
+
+class ProductPriceChart(TemplateView):
+    template_name = 'product_price_chart.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product_id = self.kwargs['product_id']
+        prices = Price.objects.filter(produit_id=product_id).order_by('date')
+        context['product_id'] = product_id
+        context['labels'] = [price.date.strftime('%Y-%m-%d') for price in prices]
+        context['values'] = [price.value for price in prices]
+        return context
 #famille produit
 def export_famille_produit(request):
     famille_produit_resource = FamilleProduitResource()
