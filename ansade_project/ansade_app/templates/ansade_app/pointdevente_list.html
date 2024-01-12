@@ -1,50 +1,105 @@
 <!-- ansade_app/templates/ansade_app/point_de_vente_list.html -->
-{% extends 'ansade_app/base.html' %}
+{% extends 'ansade_app/base.html' %} {% block content %}
+<div class="container mt-2">
+  <!-- Cart Formulaire d'import Produit -->
+  <div class="card">
+    <div class="card-header">
+      Formulaire d'importation et d'exportation Point de vente
+    </div>
+    <div class="card-body">
+      <div class="border p-2 mb-2">
+        <div class="nav">
+          <a
+            href="{% url 'point_de_vente_export' %}"
+            class="btn btn-info btn-sm"
+            >Exporter Point de vente</a
+          >
+        </div>
+      </div>
+      <div class="border p-2 mb-2">
+        <div class="nav">
+          <form
+            method="post"
+            enctype="multipart/form-data"
+            action="{% url 'point_de_vente_import' %}"
+          >
+            {% csrf_token %}
 
-{% block content %}
-  <!-- Formulaire d'import Produit -->
-  <form method="post" enctype="multipart/form-data" action="{% url 'point_de_vente_import' %}">
-    {% csrf_token %}
-    <label for="id_myfile">Sélectionnez un fichier CSV pour l'import point de ventes :</label>
-    <input type="file" name="myfile" required>
-    <button type="submit">Importer Point de vente</button>
-  </form>
-
-  <!-- Lien d'export Produit -->
-  <a href="{% url 'point_de_vente_export' %}" class="btn btn-info btn-sm">Exporter Point de vente</a>
-
-  <h2>Point de Vente List</h2>
-  <a class="btn btn-primary mb-2" href="{% url 'point_de_vente_create' %}" >Ajouter une Point de Vente</a>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Code</th>
-        <th>Wilaya</th>
-        <th>Moughtaa</th>
-        <th>Commune</th>
-        <th>GPS Lat</th>
-        <th>GPS Long</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for point in object_list %}
-        <tr>
-          <td>{{ point.id }}</td>
-          <td>{{ point.code }}</td>
-          <td>{{ point.wilaya }}</td>
-          <td>{{ point.moughtaa }}</td>
-          <td>{{ point.commune }}</td>
-          <td>{{ point.gps_lat }}</td>
-          <td>{{ point.gps_long }}</td>
-          <td>
-            <a class="btn btn-info btn-sm" href="{% url 'point_de_vente_detail' pk=point.pk %}">Detail</a>
-            <a class="btn btn-warning btn-sm" href="{% url 'point_de_vente_update' pk=point.pk %}">Edit</a>
-            <a class="btn btn-danger btn-sm" href="{% url 'point_de_vente_delete' pk=point.pk %}" >Delete</a>
-          </td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+            <input type="file" name="myfile" required class="btn btn-secondary" />
+            <button type="submit" class="btn btn-info btn-sm">Importer Point de vente</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Liste des Familles de Produit -->
+  <div class="card mt-3">
+    <div class="card-header">Liste des Points des Ventes</div>
+    <div class="card-body">
+      <div class="border p-2 mb-2">
+        <div class="nav">
+          <!-- Add button to create a new FamilleProduit -->
+          <a
+            class="btn btn-outline-secondary"
+            href="{% url 'point_de_vente_create' %}"
+            ><i class="bi bi-arrow-up-square"></i>
+            <span class="ms-2">Ajouter une Point de Vente</span></a
+          >
+        </div>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Code</th>
+            <th>Wilaya</th>
+            <th>Moughtaa</th>
+            <th>Commune</th>
+            <th>GPS Lat</th>
+            <th>GPS Long</th>
+            <th>Detail</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for point in object_list %}
+          <tr>
+            <td>{{ point.id }}</td>
+            <td>{{ point.code }}</td>
+            <td>{{ point.wilaya }}</td>
+            <td>{{ point.moughtaa }}</td>
+            <td>{{ point.commune }}</td>
+            <td>{{ point.gps_lat }}</td>
+            <td>{{ point.gps_long }}</td>
+            <td>
+              <a
+                class="btn btn-info btn-sm"
+                href="{% url 'point_de_vente_detail' pk=point.pk %}"
+                >Detail</a
+              >
+            </td>
+            <td>
+              <a
+                class="btn btn-warning btn-sm"
+                href="{% url 'point_de_vente_update' pk=point.pk %}"
+              >
+                Update</a
+              >
+            </td>
+            <td>
+              <a
+                class="btn btn-danger btn-sm"
+                href="{% url 'point_de_vente_delete' pk=point.pk %}"
+              >
+                Delete</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 {% endblock %}

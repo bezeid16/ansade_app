@@ -1,21 +1,29 @@
-<!-- ansade_app/templates/ansade_app/panier_detail.html -->
+<!-- ansade_app/templates/ansade_app/produit_detail.html -->
 
-{% extends 'ansade_app/base.html' %}
+{% extends 'ansade_app/base.html' %} {% block content %}
+<div class="container mt-3" style="padding: 60px">
+  <div class="card">
+    <div class="card-header">Panier  Detail</div>
+    <div class="card-body">
+      <dl class="row">
+        <dt class="col-sm-3">ID</dt>
+        <dd class="col-sm-9">{{ object.id }}</dd>
+    
+        <dt class="col-sm-3">Label</dt>
+        <dd class="col-sm-9">{{ object.label }}</dd>
+    
+        <dt class="col-sm-3">Code</dt>
+        <dd class="col-sm-9">{{ object.code }}</dd>
+    
+        <dt class="col-sm-3">Description</dt>
+        <dd class="col-sm-9">{{ object.description }}</dd>
+      </dl>
+      <a href="{% url 'panier_list' %}" class="btn btn-primary"
+        >Back to List</a
+      >
+    </div>
+  </div>
 
-{% block content %}
-  <h2>Basket Detail</h2>
-  <dl class="row">
-    <dt class="col-sm-3">ID</dt>
-    <dd class="col-sm-9">{{ panier.id }}</dd>
+  {% endblock %}
+</div>
 
-    <dt class="col-sm-3">Label</dt>
-    <dd class="col-sm-9">{{ panier.label }}</dd>
-
-    <dt class="col-sm-3">Code</dt>
-    <dd class="col-sm-9">{{ panier.code }}</dd>
-
-    <dt class="col-sm-3">Description</dt>
-    <dd class="col-sm-9">{{ panier.description }}</dd>
-  </dl>
-  <a href="{% url 'panier_list' %}" class="btn btn-primary">Back to List</a>
-{% endblock %}

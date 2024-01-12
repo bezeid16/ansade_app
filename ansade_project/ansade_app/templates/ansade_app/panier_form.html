@@ -1,13 +1,27 @@
-<!-- ansade_app/templates/ansade_app/panier_form.html -->
+<!-- ansade_app/templates/ansade_app/famille_produit_form.html -->
 
-{% extends 'ansade_app/base.html' %}
+{% extends 'ansade_app/base.html' %} {% block title %}Edit Panier -
+ANSADE Application{% endblock %} {% block content %}
+<div class="container mt-2" style="padding-bottom: 100px">
+  <div class="card">
+    <div class="card-header">Ajouter ou editer une panier</div>
+    <div class="card-body">
+      <div class="form-container p-2 px-5">
+        <form method="post">
+          {% csrf_token %} {{ form.as_p }}
 
-{% block content %}
-  <h2>{% if panier.id %}Edit{% else %}Add{% endif %} Panier</h2>
-  <form method="post" class="form">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Save</button>
-  </form>
-  <a href="{% url 'panier_list' %}" class="btn btn-primary">Back to List</a>
+          <button type="submit" class="btn btn-primary">Ajouter</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
+<div class="container mt-3">
+  <h2>Ajouter ou editer une panier</h2>
+  <form method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">save</button>
+  </form>
+</div>

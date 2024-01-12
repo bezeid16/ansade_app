@@ -1,28 +1,70 @@
 <!-- ansade_app/templates/ansade_app/home.html -->
 
-{% extends 'ansade_app/base.html' %}
-{%load static%}
-{% block content %}
-    <div style="background-color: #2ecc71; color: #ffffff; padding: 50px; text-align: center;">
-    <img src="{% static 'ansadee.png' %}" alt="Logo ANSADE" style="width: 150px; height: auto; margin-bottom: 20px;">
-
-        <h1>Bienvenue sur Ansade app </h1>
-        <p>
-            ANSADE app est une plateforme  pour la gestion efficace et le calcul de l'INPC (Indice National des Prix à la Consommation).
-            Notre mission est de simplifier l'analyse des données et les processus de prise de décision pour les entreprises et les particuliers.
-        </p>
-
-            Fonctionnalités clés :
-        </p>
-        <ul style="list-style-type: none; padding: 0;">
-            <li>Calculs avancés de l'INPC</li>
-            <li>Gestion intuitive des données</li>
-            <li>Outils puissants de prise de décision</li>
-        </ul>
-
-        <p>
-            Visitez le site Web : <a href="https://ansade.mr" style="color: #ffffff; text-decoration: underline;">ansade.mr</a>
-        </p>
+{% extends 'ansade_app/base.html' %} {%load static%} {% block content %}
+<div style="background-color: #2ecc71; padding: 50px; text-align: center">
+  
+  <a href="https://ansade.mr/fr/" target="_blank"> <!-- Replace the href with your desired link -->
+    <img
+      src="{% static 'ansadee.png' %}"
+      alt="Logo ANSADE"
+      style="width: 200px; height: auto; margin-bottom: 20px"
+    />
+  </a>
+ 
+  <h1>Bienvenue sur Ansade app</h1>
+  <p class="h6">
+    ANSADE app est une plateforme pour la gestion efficace et le calcul de
+    l'INPC (Indice National des Prix à la Consommation). Notre mission est de
+    simplifier l'analyse des données et les processus de prise de décision pour
+    les entreprises et les particuliers.
+  </p>
+  <h2 class="pb-3">Nos Fonctionnalités</h2>
+  <div class="row row-cols-2 justify-content-center">
+    <div class="card text-center" style="width: 18rem">
+      <div class="card-body">
+        <img
+          src="{% static 'fonct1.png' %}"
+          alt="Your Logo"
+          class="pb-3"
+          width="100px"
+        />
+        <h5 class="card-title pb-3">Calculs avancés de l'INPC</h5>
+        <a href="{% url 'produit_list' %}" class="btn btn-success"
+          >Back to List</a
+        >
+      </div>
     </div>
-    
+    <div class="card text-center ms-3" style="width: 18rem">
+      <div class="card-body">
+        <img
+          src="{% static 'fonct2.png' %}"
+          alt="Your Logo"
+          class="pb-3"
+          width="100px"
+        />
+
+        <h5 class="card-title pb-3">Gestion intuitive des données</h5>
+        <a href="{% url 'produit_list' %}" class="btn btn-success"
+          >Back to List</a
+        >
+      </div>
+    </div>
+    <div class="card text-center ms-3" style="width: 18rem">
+      <div class="card-body">
+        <img
+          src="{% static 'fonct3.png' %}"
+          alt="Your Logo"
+          class="pb-3"
+          width="100px"
+        />
+
+        <h5 class="card-title pb-3">Outils puissants de prise de décision</h5>
+        <a href="{%url 'product_price_chart' product_id=1   %}" class="btn btn-success"
+          >Visualisation</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

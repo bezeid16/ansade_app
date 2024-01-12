@@ -1,8 +1,8 @@
 # ansade_app/views.py
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import FamilleProduit, Produit, Panier, PanierProduit, Price, PointDeVente
-from django.shortcuts import render
+from .models import FamilleProduit, Produit, Panier, PanierProduit, Price, PointDeVente, PriceIndex
+from django.shortcuts import render, get_object_or_404
 from .resources import FamilleProduitResource, ProduitResource ,PanierResource ,PanierProduitResource ,PriceResource ,PointDeVenteResource # Importez d'autres ressources nécessaires
 from django.http import HttpResponse
 from tablib import Dataset
@@ -10,6 +10,28 @@ from django.contrib import messages
 from django.shortcuts import redirect
 import csv
 from django.views.generic import TemplateView
+
+
+
+
+def ipc_view(request):
+    try:
+        # Essayez de récupérer l'objet PriceIndex, sinon lancez une exception
+        price_index = PriceIndex.objects.get()  # Ajoutez les filtres nécessaires ici
+    except PriceIndex.DoesNotExist:
+        # Si l'objet n'existe pas, renvoyez une page avec un message approprié
+        return render(request, 'ansade_app/priceindex_not_found.html')
+
+    # Si l'objet est trouvé, continuez avec le traitement normal
+    return render(request, 'ansade_app/ipc.html', {'price_index': price_index})
+
+
+
+
+
+
+
+
 
 class ProductPriceChart(TemplateView):
     template_name = 'product_price_chart.html'
@@ -340,3 +362,11 @@ class PointDeVenteDeleteView(DeleteView):
     model = PointDeVente
     fields = ['code', 'wilaya', 'moughtaa', 'commune', 'gps_lat', 'gps_long']
     success_url = reverse_lazy('point_de_vente_list')  # Redirect to the list view after deleting
+
+
+def famille_produit_search(request):
+    search_query = request.GET.get('search_query', '')
+    famille_produits = FamilleProduit.objects.filter(label__icontains=search_query)
+
+    context = {'famille_produits': famille_produits, 'search_query': search_query}
+    return render(request, 'familleproduit_list.html', context)

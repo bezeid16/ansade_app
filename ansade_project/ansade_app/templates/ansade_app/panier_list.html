@@ -1,44 +1,97 @@
 <!-- ansade_app/templates/ansade_app/panier_list.html -->
 
-{% extends 'ansade_app/base.html' %}
+{% extends 'ansade_app/base.html' %} {% block content %}
+<div class="container mt-2">
+  <!-- Cart Formulaire d'import Produit -->
+  <div class="card">
+    <div class="card-header">
+      Formulaire d'importation et d'exportation des paniers
+    </div>
+    <div class="card-body">
+      <div class="border p-2 mb-2">
+        <div class="nav">
+          <a href="{% url 'panier_export' %}" class="btn btn-info btn-sm"
+            >Exporter panier</a
+          >
+        </div>
+      </div>
+      <div class="border p-2 mb-2">
+        <div class="nav">
+          <form
+            method="post"
+            enctype="multipart/form-data"
+            action="{% url 'panier_import' %}"
+          >
+            {% csrf_token %}
 
-{% block content %}
- <!-- Formulaire d'import Produit -->
- <form method="post" enctype="multipart/form-data" action="{% url 'panier_import' %}">
-  {% csrf_token %}
-  <label for="id_myfile">Sélectionnez un fichier CSV pour l'import panier:</label>
-  <input type="file" name="myfile" required>
-  <button type="submit">Importer panier</button>
-</form>
-<!-- Lien d'export Produit -->
-<a href="{% url 'panier_export' %}" class="btn btn-info btn-sm">Exporter panier</a>
+            <input type="file" name="myfile" required class="btn btn-secondary" />
+            <button type="submit" class="btn btn-info btn-sm">Importer panier</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Liste des Familles de Produit -->
+  <div class="card mt-3">
+    <div class="card-header">liste des paniers</div>
+    <div class="card-body">
+      <div class="border p-2 mb-2">
+        <div class="nav">
+          <!-- Add button to create a new FamilleProduit -->
+          <a class="btn btn-outline-secondary" href="{% url 'panier_create' %}"
+            ><i class="bi bi-arrow-up-square"></i>
+            <span class="ms-2">Ajouter un panier</span></a
+          >
+        </div>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Label</th>
+            <th>Code</th>
+            <th>Description</th>
+            <th>Detail</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for panier in object_list %}
 
-  <h2>panier List</h2>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Label</th>
-        <th>Code</th>
-        <th>Description</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for panier in object_list %}
-        <tr>
-          <td>{{ panier.id }}</td>
-          <td>{{ panier.label }}</td>
-          <td>{{ panier.code }}</td>
-          <td>{{ panier.description }}</td>
-          <td>
-            <a href="{% url 'panier_detail' panier.id %}" class="btn btn-info btn-sm">Detail</a>
-            <a href="{% url 'panier_update' panier.id %}" class="btn btn-warning btn-sm">Edit</a>
-            <a href="{% url 'panier_delete' panier.id %}" class="btn btn-danger btn-sm">Delete</a>
-          </td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <a href="{% url 'panier_create' %}" class="btn btn-success">Ajouter un panier</a>
+          <tr>
+            <td>{{ panier.id }}</td>
+            <td>{{ panier.label }}</td>
+            <td>{{ panier.code }}</td>
+            <td>{{ panier.description}}</td>
+            <td>
+              <a
+                class="btn btn-info btn-sm"
+                href="{% url 'panier_detail' panier.id %}"
+                >Detail</a
+              >
+            </td>
+            <td>
+              <a
+                class="btn btn-warning btn-sm"
+                href="{% url 'panier_update' panier.id %}"
+              >
+                Update</a
+              >
+            </td>
+            <td>
+              <a
+                class="btn btn-danger btn-sm"
+                href="{% url 'panier_delete' panier.id %}"
+              >
+                Delete</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 {% endblock %}

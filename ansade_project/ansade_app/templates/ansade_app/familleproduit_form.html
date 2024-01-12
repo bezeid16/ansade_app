@@ -1,16 +1,27 @@
 <!-- ansade_app/templates/ansade_app/famille_produit_form.html -->
 
-{% extends 'ansade_app/base.html' %}
-
-{% block title %}Edit Product Family - ANSADE Application{% endblock %}
-
-{% block content %}
-    <div class="container mt-3">
-        <h2>Ajouter ou editer une famille de produit</h2>
+{% extends 'ansade_app/base.html' %} {% block title %}Edit Product Family -
+ANSADE Application{% endblock %} {% block content %}
+<div class="container mt-2" style="padding-bottom: 100px">
+  <div class="card">
+    <div class="card-header">Ajouter ou editer une famille de produit</div>
+    <div class="card-body">
+      <div class="form-container p-2 px-5">
         <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">save</button>
+          {% csrf_token %} {{ form.as_p }}
+
+          <button type="submit" class="btn btn-primary">Ajouter</button>
         </form>
+      </div>
     </div>
+  </div>
+</div>
+
 {% endblock %}
+<div class="container mt-3">
+  <h2>Ajouter ou editer une famille de produit</h2>
+  <form method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">save</button>
+  </form>
+</div>

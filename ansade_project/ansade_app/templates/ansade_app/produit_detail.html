@@ -1,24 +1,31 @@
 <!-- ansade_app/templates/ansade_app/produit_detail.html -->
 
-{% extends 'ansade_app/base.html' %}
+{% extends 'ansade_app/base.html' %} {% block content %}
+<div class="container mt-3" style="padding: 60px">
+  <div class="card">
+    <div class="card-header">Produit Detail</div>
+    <div class="card-body">
+      <dl class="row">
+        <dt class="col-sm-3">ID</dt>
+        <dd class="col-sm-9">{{ produit.id }}</dd>
 
-{% block content %}
-  <h2>Produit Detail</h2>
-  <dl class="row">
-    <dt class="col-sm-3">ID</dt>
-    <dd class="col-sm-9">{{ produit.id }}</dd>
+        <dt class="col-sm-3">Label</dt>
+        <dd class="col-sm-9">{{ produit.label }}</dd>
 
-    <dt class="col-sm-3">Label</dt>
-    <dd class="col-sm-9">{{ produit.label }}</dd>
+        <dt class="col-sm-3">Price Unit</dt>
+        <dd class="col-sm-9">{{ produit.price_unit }}</dd>
 
-    <dt class="col-sm-3">Price Unit</dt>
-    <dd class="col-sm-9">{{ produit.price_unit }}</dd>
+        <dt class="col-sm-3">Code</dt>
+        <dd class="col-sm-9">{{ produit.code }}</dd>
 
-    <dt class="col-sm-3">Code</dt>
-    <dd class="col-sm-9">{{ produit.code }}</dd>
+        <dt class="col-sm-3">Family</dt>
+        <dd class="col-sm-9">{{ produit.famille_produit.label }}</dd>
+      </dl>
+      <a href="{% url 'produit_list' %}" class="btn btn-primary"
+        >Back to List</a
+      >
+    </div>
+  </div>
 
-    <dt class="col-sm-3">Family</dt>
-    <dd class="col-sm-9">{{ produit.famille_produit.label }}</dd>
-  </dl>
-  <a href="{% url 'produit_list' %}" class="btn btn-primary">Back to List</a>
-{% endblock %}
+  {% endblock %}
+</div>

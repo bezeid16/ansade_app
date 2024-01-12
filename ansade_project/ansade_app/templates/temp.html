@@ -1,0 +1,12 @@
+<!-- votre_template.html -->
+
+{% extends 'ansade_app/base.html' %}
+
+{% block content %}
+<h2>Indice des Prix à la Consommation (IPC)</h2>
+<p>Date de base: {{ ipc.base_date }}</p>
+<p>Valeur IPC: {{ ipc.ipc }}</p>
+
+<!-- Ajoutez ici des graphiques, tableaux ou autres éléments de visualisation -->
+
+{% endblock %}

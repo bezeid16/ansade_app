@@ -2,93 +2,87 @@
 
 <!DOCTYPE html>
 <html lang="en">
-{%load static%}
+  {%load static%}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block title %}ANSADE Application{% endblock %}</title>
-    
+
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Your custom CSS styles -->
-    <style>
-        /* Customize the navbar styles */
-        nav.navbar {
-            background-color: black;
-        }
-
-        /* Customize the text color in the navbar */
-        nav.navbar a.navbar-brand,
-        nav.navbar a.nav-link {
-            color: white;
-        }
-    </style>
-    <style>
-        /* Add style for the logo image */
-        nav.navbar img.logo {
-            max-height: 50px; /* Adjust the height as needed */
-            margin-right: 20px; /* Add margin to separate logo from text */
-        }
-    </style>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
 
     <style>
-        /* Customize the navbar styles */
-        nav.navbar.bg-light {
-            background-color: black !important; /* Set the background color to black */
-        }
-
-        /* Customize the text color in the navbar */
-        nav.navbar a.navbar-brand,
-        nav.navbar a.nav-link {
-            color: white !important; /* Set the text color to white */
-        }
+      /* Add style for the logo image */
+      nav.navbar img.logo {
+        max-height: 50px; /* Adjust the height as needed */
+        margin-right: 20px; /* Add margin to separate logo from text */
+      }
     </style>
-</head>
-<body>
+    <style>
+      /* Customize the text color in the navbar */
+      nav.navbar a.navbar-brand,
+      nav.navbar a.nav-link {
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg navbar-light bg-light"
+      style="background-color: #00ff00"
+    >
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">ANSADE App SID32</a>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-
-        <a class="navbar-brand" href="">ANSADE App SID32</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'famille_produit_list' %}">Famille de produits</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'produit_list' %}">Produits</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'panier_list' %}">Panier</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="panierproduits">Ponderation</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'price_list' %}">Prix</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'point_de_vente_list' %}">points de ventes</a>
-                </li>
-                <!-- Add more links based on your application's structure -->
-            </ul>
+        <div
+          class="collapse navbar-collapse d-flex justify-content-center"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <button class="nav-link btn btn-success" onclick="window.location.href='{% url 'home' %}'">Home</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link btn btn-success" onclick="window.location.href='{% url 'famille_produit_list' %}'">Famille de produits</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link btn btn-success" onclick="window.location.href='{% url 'produit_list' %}'">Produits</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link btn btn-success" onclick="window.location.href='{% url 'panier_list' %}'">Panier</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link btn btn-success" onclick="window.location.href='{% url 'panier_produit_list'%}'">Ponderation</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link btn btn-success" onclick="window.location.href='{% url 'price_list' %}'">Prix</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link btn btn-success" onclick="window.location.href='{% url 'point_de_vente_list' %}'">Points de ventes</button>
+            </li>
+            <!-- Add more buttons based on your application's structure -->
+          </ul>
         </div>
-        <a class="navbar-brand" href="">
-            <img src="{% static 'esp1.png' %}" alt="Your Logo" class="logo">
+
+        <a class="navbar-brand" href="https://esp.mr/page/d%C3%A9partement-statistique-et-ing%C3%A9nierie-des-donn%C3%A9es-sid" target="_blank">
+          <img src="{% static 'esp1.png' %}" alt="Your Logo" class="logo" />
         </a>
+      </div>
     </nav>
 
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+    <main>{% block content %}{% endblock %}</main>
 
     <!-- Bootstrap JS and Popper.js (required for Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -96,12 +90,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Your custom JS scripts -->
 
-    <footer>
-        <!-- Include common footer content, such as copyright information, links, etc. -->
-        <p>&copy; 2023-2024 22068 ANSADE. All rights reserved.</p>
+    <!-- <footer> -->
+    <!-- Include common footer content, such as copyright information, links, etc. -->
+    <!-- <p>&copy; 2023-2024 22068 ANSADE. All rights reserved.</p> -->
+    <!-- </footer> -->
+    <footer class="py-3 my-4">
+
+      <p class="text-center text-muted">
+        &copy;2024 22068 bezeid ANSADE. All rights reserved.
+      </p>
     </footer>
-
     <!-- Include common scripts, such as jQuery, Bootstrap, etc. -->
-
-</body>
+  </body>
 </html>

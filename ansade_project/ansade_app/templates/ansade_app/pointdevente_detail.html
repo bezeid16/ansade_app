@@ -1,26 +1,34 @@
-<!-- ansade_app/templates/ansade_app/point_de_vente_detail.html -->
-{% extends 'ansade_app/base.html' %}
+<!-- ansade_app/templates/ansade_app/produit_detail.html -->
 
-{% block content %}
-  <h2>Point de Vente Detail</h2>
-  <dl class="row">
-    <dt class="col-sm-3">Code</dt>
-    <dd class="col-sm-9">{{ point.code }}</dd>
+{% extends 'ansade_app/base.html' %} {% block content %}
+<div class="container mt-3" style="padding: 60px">
+  <div class="card">
+    <div class="card-header">Point de Vente Detail</div>
+    <div class="card-body">
+      <dl class="row">
+        <dt class="col-sm-3">Code</dt>
+        <dd class="col-sm-9">{{ object.code }}</dd>
 
-    <dt class="col-sm-3">Wilaya</dt>
-    <dd class="col-sm-9">{{ point.wilaya }}</dd>
+        <dt class="col-sm-3">Wilaya</dt>
+        <dd class="col-sm-9">{{ object.wilaya }}</dd>
 
-    <dt class="col-sm-3">Moughtaa</dt>
-    <dd class="col-sm-9">{{ point.moughtaa }}</dd>
+        <dt class="col-sm-3">Moughtaa</dt>
+        <dd class="col-sm-9">{{ object.moughtaa }}</dd>
 
-    <dt class="col-sm-3">Commune</dt>
-    <dd class="col-sm-9">{{ point.commune }}</dd>
+        <dt class="col-sm-3">Commune</dt>
+        <dd class="col-sm-9">{{ object.commune }}</dd>
 
-    <dt class="col-sm-3">GPS Lat</dt>
-    <dd class="col-sm-9">{{ point.gps_lat }}</dd>
+        <dt class="col-sm-3">GPS Lat</dt>
+        <dd class="col-sm-9">{{ object.gps_lat }}</dd>
 
-    <dt class="col-sm-3">GPS Long</dt>
-    <dd class="col-sm-9">{{ point.gps_long }}</dd>
-  </dl>
-  <a href="{% url 'point_de_vente_list' %}" class="btn btn-secondary btn-sm">Back to List</a>
-{% endblock %}
+        <dt class="col-sm-3">GPS Long</dt>
+        <dd class="col-sm-9">{{ object.gps_long }}</dd>
+      </dl>
+      <a href="{% url 'point_de_vente_list' %}" class="btn btn-primary"
+        >Back to List</a
+      >
+    </div>
+  </div>
+
+  {% endblock %}
+</div>

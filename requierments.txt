@@ -1,4 +1,4 @@
 django
-musqlclient
+mysqlclient
 django-mysql
 django-bootstrap-v5

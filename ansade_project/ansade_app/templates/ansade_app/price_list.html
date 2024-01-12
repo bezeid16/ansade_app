@@ -1,48 +1,102 @@
 <!-- ansade_app/templates/ansade_app/price_list.html -->
-{% extends 'ansade_app/base.html' %}
+{% extends 'ansade_app/base.html' %} {% block content %}
+<div class="container mt-2">
+  <!-- Cart Formulaire d'import Produit -->
+  <div class="card">
+    <div class="card-header">
+      Formulaire d'importation et d'exportation panier et Visualisation des
+      Prices
+    </div>
+    <div class="card-body">
+      <div class="border p-2 mb-2">
+        <div class="nav">
+          <a href="{% url 'price_export' %}" class="btn btn-info btn-sm"
+            >Exporter Prices</a
+          >
+          <a
+            href="{% url 'product_price_chart' product_id=1  %}"
+            class="btn btn-info btn-sm ms-2"
+            ><i class="bi bi-clipboard2-data"></i>
+            <span class="ms-1">Visualiser l'évolution des prix</span></a
+          >
+        </div>
+      </div>
+      <div class="border p-2 mb-2">
+        <div class="nav">
+          <form
+            method="post"
+            enctype="multipart/form-data"
+            action="{% url 'price_import' %}"
+          >
+            {% csrf_token %}
 
-{% block content %}
-
-
-  <!-- Formulaire d'import Produit -->
-  <form method="post" enctype="multipart/form-data" action="{% url 'price_import' %}">
-    {% csrf_token %}
-    <label for="id_myfile">Sélectionnez un fichier CSV pour l'import Prices :</label>
-    <input type="file" name="myfile" accept=".csv" required>
-    <button type="submit">Importer Prices</button>
-  </form>
-
-  <!-- Lien d'export Produit -->
-  <a href="{% url 'price_export' %}" class="btn btn-info btn-sm">Exporter Prices</a>
-
-  <a href="{% url 'product_price_chart' product_id=1 %}" class="btn btn-primary">Visualiser l'évolution des prix</a>
-
-  <h2>Prix List</h2>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Value</th>
-        <th>Date</th>
-        <th>Point de Vente</th>
-        <th>Produit</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for price in object_list %}
-        <tr>
-          <td>{{ price.value }}</td>
-          <td>{{ price.date }}</td>
-          <td>{{ price.point_de_vente }}</td>
-          <td>{{ price.produit }}</td>
-          <td>
-            <a href="{% url 'price_detail' pk=price.pk %}" class="btn btn-info btn-sm">Detail</a>
-            <a href="{% url 'price_update' pk=price.pk %}" class="btn btn-warning btn-sm">Edit</a>
-            <a href="{% url 'price_delete' pk=price.pk %}" class="btn btn-danger btn-sm">Delete</a>
-          </td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <a href="{% url 'price_create' %}" class="btn btn-success btn-sm">Add Price</a>
+            <input type="file" name="myfile" required class="btn btn-secondary" />
+            <button type="submit" class="btn btn-info btn-sm" >Importer Prices</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Liste des Familles de Produit -->
+  <div class="card mt-3">
+    <div class="card-header">Liste des prices</div>
+    <div class="card-body">
+      <div class="border p-2 mb-2">
+        <div class="nav">
+          <!-- Add button to create a new FamilleProduit -->
+          <a class="btn btn-outline-secondary" href="{% url 'price_create' %}"
+            ><i class="bi bi-arrow-up-square"></i>
+            <span class="ms-2">Ajouter Price</span></a
+          >
+        </div>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Value</th>
+            <th>Date</th>
+            <th>Point de Vente</th>
+            <th>Produit</th>
+            <th>Detail</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for price in object_list %}
+          <tr>
+            <td>{{ price.value }}</td>
+            <td>{{ price.date }}</td>
+            <td>{{ price.point_de_vente }}</td>
+            <td>{{ price.produit }}</td>
+            <td>
+              <a
+                class="btn btn-info btn-sm"
+                href="{% url 'price_detail' pk=price.pk %}"
+                >Detail</a
+              >
+            </td>
+            <td>
+              <a
+                class="btn btn-warning btn-sm"
+                href="{% url 'price_update' pk=price.pk %}"
+              >
+                Update</a
+              >
+            </td>
+            <td>
+              <a
+                class="btn btn-danger btn-sm"
+                href="{% url 'price_delete' pk=price.pk %}"
+              >
+                Delete</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 {% endblock %}

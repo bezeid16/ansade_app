@@ -1,14 +1,27 @@
-<!-- ansade_app/templates/ansade_app/point_de_vente_form.html -->
-{% extends 'ansade_app/base.html' %}
+<!-- ansade_app/templates/ansade_app/famille_produit_form.html -->
 
-{% block content %}
-  <h2>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Point de Vente</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Save</button>
-    <a href="{% url 'point_de_vente_list' %}" class="btn btn-secondary">Cancel</a>
-  </form>
+{% extends 'ansade_app/base.html' %} {% block title %}Edit point de vente  -
+ANSADE Application{% endblock %} {% block content %}
+<div class="container mt-2" style="padding-bottom: 100px">
+  <div class="card">
+    <div class="card-header">Ajouter ou editer une point de vente</div>
+    <div class="card-body">
+      <div class="form-container p-2 px-5">
+        <form method="post">
+          {% csrf_token %} {{ form.as_p }}
 
+          <button type="submit" class="btn btn-primary">Ajouter</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
+<div class="container mt-3">
+  <h2>Ajouter ou editer une point de vente</h2>
+  <form method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">save</button>
+  </form>
+</div>

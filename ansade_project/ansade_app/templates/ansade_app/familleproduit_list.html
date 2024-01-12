@@ -1,47 +1,104 @@
 <!-- ansade_app/templates/ansade_app/familleproduit_list.html -->
 
-{% extends 'ansade_app/base.html' %}
-
-{% block content %}
- <!-- Formulaire d'import Produit -->
- <form method="post" enctype="multipart/form-data" action="{% url 'famille_produit_import' %}">
-  {% csrf_token %}
-  <label for="id_myfile">Sélectionnez un fichier CSV pour l'import famille de produit :</label>
-  <input type="file" name="myfile" required>
-  <button type="submit">Importer famille de produit</button>
+{% extends 'ansade_app/base.html' %} {% block content %}
+<form method="get">
+  <input type="text" name="search_query" value="{{ search_query }}" placeholder="Search...">
+  <button type="submit">Search</button>
 </form>
+<div class="container mt-2">
+  <!-- Cart Formulaire d'import Produit -->
+  <div class="card">
+    <div class="card-header">
+      Formulaire d'importation et d'exportation des produits
+    </div>
+    <div class="card-body">
+      <div class="border p-2 mb-2">
+        <div class="nav">
+          <a
+            href="{% url 'famille_produit_export' %}"
+            class="btn btn-info btn-sm"
+            >Exporter famille de produit</a
+          >
+        </div>
+      </div>
+      <div class="border p-2 mb-2">
+        <div class="nav">
+          <form
+            method="post"
+            enctype="multipart/form-data"
+            action="{% url 'famille_produit_import' %}"
+          >
+            {% csrf_token %}
 
-<!-- Lien d'export Produit -->
-<a href="{% url 'famille_produit_export' %}" class="btn btn-info btn-sm">Exporter famille de produit</a>
+            <input type="file" name="myfile" required  class="btn btn-secondary"/>
+            <button type="submit" class="btn btn-info btn-sm">Importer famille de produit</button>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Liste des Familles de Produit -->
+  <div class="card mt-3">
+    <div class="card-header">Liste des Familles de Produit</div>
+    <div class="card-body">
+      <div class="border p-2 mb-2">
+        <div class="nav">
+          <!-- Add button to create a new FamilleProduit -->
+          <a
+            class="btn btn-outline-secondary"
+            href="{% url 'famille_produit_create' %}"
+            ><i class="bi bi-arrow-up-square"></i>
+            <span class="ms-2">Ajouter une Famille</span></a
+          >
+        </div>
+      </div>
+      <table class="table table-striped" *ngIf="products ; else errors">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Label</th>
+            <th>Detail</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for famille in object_list %}
 
+          <tr>
+            <td>{{ famille.id }}</td>
+            <td>{{ famille.label }}</td>
 
-  <h2>Liste des Familles de Produit </h2>
-
-  <!-- Add button to create a new FamilleProduit -->
-  <a class="btn btn-primary mb-2" href="{% url 'famille_produit_create' %}">Ajouter une Famille</a>
-
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Label</th>
-        <!-- Add other fields as needed -->
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for famille in object_list %}
-        <tr>
-          <td>{{ famille.id }}</td>
-          <td>{{ famille.label }}</td>
-          <td>
-            <a class="btn btn-info btn-sm" href="{% url 'famille_produit_detail' famille.id %}">Detail</a>
-            <a class="btn btn-warning btn-sm" href="{% url 'famille_produit_update' famille.id %}">Update</a>
-            <a class="btn btn-danger btn-sm" href="{% url 'famille_produit_delete' famille.id %}">Delete</a>
-          </td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+            <td>
+              <a
+                class="btn btn-info btn-sm"
+                href="{% url 'famille_produit_detail' famille.id %}"
+                >Detail</a
+              >
+            </td>
+            <td>
+              <a
+                class="btn btn-warning btn-sm"
+                href="{% url 'famille_produit_update' famille.id %}"
+              >
+                Update</a
+              >
+            </td>
+            <td>
+              <a
+                class="btn btn-danger btn-sm"
+                href="{% url 'famille_produit_delete' famille.id %}"
+              >
+                Delete</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

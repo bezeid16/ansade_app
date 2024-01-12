@@ -1,16 +1,18 @@
-<!-- ansade_app/templates/ansade_app/famille_produit_confirm_delete.html -->
+<!-- ansade_app/templates/ansade_app/produit_confirm_delete.html -->
 
-{% extends 'ansade_app/base.html' %}
-
-{% block title %}Confirm Delete Product Family - ANSADE Application{% endblock %}
-
-{% block content %}
-    <div class="container mt-3">
-        <h2>Confirm Delete Product Family</h2>
-        <p>Are you sure you want to delete the product family '{{ famille_produit.label }}'?</p>
-        <form method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
+{% extends 'ansade_app/base.html' %} {% block content %}
+<center>
+  <div class="container mt-3" style="padding: 140px">
+    <h2>Confirm Delete</h2>
+    <p>Are you sure you want to delete this famille de produit?</p>
+    <div class="nav d-flex justify-content-center">
+      <a href="{% url 'famille_produit_list' %}" class="btn btn-primary">Cancel</a>
+      <form method="post" class="form">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger ms-3">Delete</button>
+      </form>
     </div>
+  </div>
+</center>
+
 {% endblock %}
