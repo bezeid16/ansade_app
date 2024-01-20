@@ -58,26 +58,3 @@ class PointDeVente(models.Model):
 
     def __str__(self):
         return self.code
-
-
-class PriceIndex(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    base_date = models.DateField()
-    # Autres champs...
-
-    def calculate_ipc(self):
-        # Obtenez tous les prix associés à cet indice
-        prices = Price.objects.filter(date__gte=self.base_date, date__lte=timezone.now())
-        
-        # Calculez l'IPC en fonction des prix
-        ipc = 0.0
-        for price in prices:
-            ipc += price.value
-
-        # Faites d'autres calculs si nécessaire...
-
-        return ipc
-
-    def save(self, *args, **kwargs):
-        self.ipc = self.calculate_ipc()
-        super().save(*args, **kwargs)

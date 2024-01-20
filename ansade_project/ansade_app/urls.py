@@ -9,15 +9,18 @@ from .views import (
     PanierProduitListView,PanierProduitDetailView,
     PanierProduitCreateView, PanierProduitUpdateView, PanierProduitDeleteView,
     PriceListView,PriceDetailView,
-    PriceCreateView, PriceUpdateView, PriceDeleteView,ipc_view,
-    PointDeVenteListView, PointDeVenteDetailView, PointDeVenteCreateView, PointDeVenteUpdateView, PointDeVenteDeleteView,ProductPriceChart
+    PriceCreateView, PriceUpdateView, PriceDeleteView,calculate_inpc,select_product,select_product1,PricePredictionView,
+    PointDeVenteListView, PointDeVenteDetailView, PointDeVenteCreateView, PointDeVenteUpdateView, PointDeVenteDeleteView,ProductPriceChartView
 )
 
 urlpatterns = [
 
     path('', views.home, name='home'),
-    path('evolution-prix/<int:product_id>/', ProductPriceChart.as_view(), name='product_price_chart'),
-    path('ipc/', ipc_view, name='ipc_view'),
+    path('product_price_chart/<int:product_id>/', ProductPriceChartView.as_view(), name='product_price_chart'),
+    path('calculate_inpc/', calculate_inpc, name='calculate_inpc'),
+    path('select_product/', select_product, name='select_product'),
+    path('select_product1/', select_product1, name='select_product1'),
+    path('predict_price/<int:product_id>/', PricePredictionView.as_view(), name='predict_price'),
 
 
 

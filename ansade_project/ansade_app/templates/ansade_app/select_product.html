@@ -1,0 +1,20 @@
+<!-- ansade_app/templates/ansade_app/select_product.html -->
+{% extends 'ansade_app/base.html' %} 
+{% block content %}
+<div class="container mt-2">
+  <div class="card">
+    <div class="card-header">
+      <h2>Select a Product</h2>
+    </div>
+    <div class="card-body">
+      <ul class="list-group">
+        {% for product in products %}
+          <li class="list-group-item">
+            <a href="{% url 'product_price_chart' product_id=product.id %}">{{ product.label }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

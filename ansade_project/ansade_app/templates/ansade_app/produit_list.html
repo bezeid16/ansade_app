@@ -1,6 +1,7 @@
 <!-- ansade_app/templates/ansade_app/produit_list.html -->
 
-{% extends 'ansade_app/base.html' %} {% block content %}
+{% extends 'ansade_app/base.html' %} {% block content %} {% load static %}
+
 <div class="container mt-2">
   <!-- Cart Formulaire d'import Produit -->
   <div class="card">
@@ -88,6 +89,7 @@
               >
                 Delete</a
               >
+              
             </td>
           </tr>
           {% endfor %}

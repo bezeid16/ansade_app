@@ -1,7 +1,7 @@
 # ansade_app/views.py
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import FamilleProduit, Produit, Panier, PanierProduit, Price, PointDeVente, PriceIndex
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView ,View
+from .models import FamilleProduit, Produit, Panier, PanierProduit, Price, PointDeVente
 from django.shortcuts import render, get_object_or_404
 from .resources import FamilleProduitResource, ProduitResource ,PanierResource ,PanierProduitResource ,PriceResource ,PointDeVenteResource # Importez d'autres ressources nécessaires
 from django.http import HttpResponse
@@ -10,40 +10,119 @@ from django.contrib import messages
 from django.shortcuts import redirect
 import csv
 from django.views.generic import TemplateView
+from django.http import JsonResponse
+from django.db.models import Sum, Avg
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
 
 
+class PricePredictionView(View):
+    template_name = 'ansade_app/price_prediction.html'
+
+    def get(self, request, product_id):
+        prices = Price.objects.filter(produit__id=product_id).order_by('date')
+
+        if len(prices) < 2:
+            return JsonResponse({'error': 'Insufficient data for prediction'})
+
+        # Préparation des données pour la régression linéaire
+        dates = [(price.date - prices[0].date).days for price in prices]
+        values = [price.value for price in prices]
+
+        # Création d'un modèle de régression linéaire
+        model = LinearRegression()
+
+        # Reshape pour s'assurer que les données sont 2D
+        dates = [[date] for date in dates]
+
+        # Division des données en ensembles d'entraînement et de test
+        X_train, X_test, y_train, y_test = train_test_split(dates, values, test_size=0.2, random_state=42)
+
+        # Entraînement du modèle
+        model.fit(X_train, y_train)
+
+        # Prédiction sur les données de test
+        predictions = model.predict(X_test)
+
+        # Calcul de la performance du modèle (à titre informatif)
+        accuracy = model.score(X_test, y_test)
+
+        # Prédictions pour les prochaines dates (30 jours de plus que la dernière date connue)
+        future_dates = [[date] for date in range(dates[-1][0] + 1, dates[-1][0] + 31)]
+        future_predictions = model.predict(future_dates)
+
+        context = {
+            'predictions': list(predictions),
+            'future_predictions': list(future_predictions),
+            'accuracy': accuracy,
+        }
+
+        return render(request, self.template_name, context)
+
+def calculate_inpc(request):
+    paniers = Panier.objects.all()
+
+    panier_selected = paniers.first()
+
+    total_cost_current = 0.0
+    total_cost_base = 0.0
+
+    base_date = Price.objects.earliest('date').date
+
+    produits_panier = PanierProduit.objects.filter(panier=panier_selected)
+    for panier_produit in produits_panier:
+        prix_actuel = Price.objects.filter(produit=panier_produit.price.produit, date__lte=panier_produit.price.date).latest('date')
+        cost_product_current = prix_actuel.value * panier_produit.ponderation
+        total_cost_current += cost_product_current
+
+    produits_base = PanierProduit.objects.filter(panier=panier_selected, price__date=base_date)
+    for produit_base in produits_base:
+        total_cost_base += produit_base.price.value * produit_base.ponderation
+
+    if total_cost_base != 0:
+        ipc_agrege = (total_cost_current / total_cost_base) * 100
+    else:
+        ipc_agrege = 0.0  
+
+    context = {
+        'paniers': paniers,
+        'panier_selected': panier_selected,
+        'ipc_agrege': ipc_agrege,
+    }
+
+    return render(request, 'calculate_inpc.html', context)
+
+class ProductPriceChartView(View):
+    template_name = 'ansade_app/product_price_chart.html'
+
+    def get(self, request, product_id):
+        product = Produit.objects.get(id=product_id)
+        prices = (
+            Price.objects.filter(produit__id=product_id)
+            .values('date')
+            .annotate(average_price=Avg('value'))
+            .order_by('date')
+        )
+
+        labels = [price['date'].strftime("%Y-%m-%d") for price in prices]
+        values = [price['average_price'] for price in prices]
 
 
-def ipc_view(request):
-    try:
-        # Essayez de récupérer l'objet PriceIndex, sinon lancez une exception
-        price_index = PriceIndex.objects.get()  # Ajoutez les filtres nécessaires ici
-    except PriceIndex.DoesNotExist:
-        # Si l'objet n'existe pas, renvoyez une page avec un message approprié
-        return render(request, 'ansade_app/priceindex_not_found.html')
+        context = {
+            'product': product,
+            'labels': labels,
+            'values': values,
+        }
 
-    # Si l'objet est trouvé, continuez avec le traitement normal
-    return render(request, 'ansade_app/ipc.html', {'price_index': price_index})
+        return render(request, self.template_name, context)
 
+def select_product(request):
+    products = Produit.objects.all()
+    return render(request, 'ansade_app/select_product.html', {'products': products})
 
-
-
-
-
-
-
-
-class ProductPriceChart(TemplateView):
-    template_name = 'product_price_chart.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        product_id = self.kwargs['product_id']
-        prices = Price.objects.filter(produit_id=product_id).order_by('date')
-        context['product_id'] = product_id
-        context['labels'] = [price.date.strftime('%Y-%m-%d') for price in prices]
-        context['values'] = [price.value for price in prices]
-        return context
+def select_product1(request):
+    products = Produit.objects.all()
+    return render(request, 'ansade_app/select_product1.html', {'products': products})
 #famille produit
 def export_famille_produit(request):
     famille_produit_resource = FamilleProduitResource()
@@ -64,7 +143,7 @@ def import_famille_produit(request):
             messages.error(request, 'Le fichier doit être un CSV.')
         else:
             try:
-                imported_data = dataset.load(new_famille_produit_file.read().decode('utf-8'))
+                imported_data = dataset.load(new_famille_produit_file.read().decode('utf-8'), format='csv')
                 famille_produit_resource.import_data(dataset, dry_run=False)
                 messages.success(request, 'Import réussi.')
             except Exception as e:
@@ -363,10 +442,3 @@ class PointDeVenteDeleteView(DeleteView):
     fields = ['code', 'wilaya', 'moughtaa', 'commune', 'gps_lat', 'gps_long']
     success_url = reverse_lazy('point_de_vente_list')  # Redirect to the list view after deleting
 
-
-def famille_produit_search(request):
-    search_query = request.GET.get('search_query', '')
-    famille_produits = FamilleProduit.objects.filter(label__icontains=search_query)
-
-    context = {'famille_produits': famille_produits, 'search_query': search_query}
-    return render(request, 'familleproduit_list.html', context)
