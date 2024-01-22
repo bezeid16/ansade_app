@@ -1,26 +1,19 @@
+<!-- Dans le fichier calculate_inpc.html -->
 {% extends 'ansade_app/base.html' %}
 
 {% block content %}
     <div class="container mt-5">
-        <h1 class="mb-4">Calculer INPC</h1>
+        <h1 class="mb-4">Calculate INPC</h1>
 
         <form method="post" action="{% url 'calculate_inpc' %}" class="mb-4">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="panier">Select a basket:</label>
-                <select name="panier" id="panier" class="form-control">
-                    {% for p in paniers %}
-                        <option value="{{ p.id }}" {% if p.id == panier_selected.id %}selected{% endif %}>{{ p.nom }}</option>
-                    {% endfor %}
-                </select>
-            </div>
             <button type="submit" class="btn btn-primary">Calculate</button>
         </form>
 
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Spanier Selectionner: {{ panier_selected.nom }}</h5>
-                <p class="card-text">IPC Agrégé: {{ ipc_agrege }}</p>
+                <h5 class="card-title">Somme de tous les IPC</h5>
+                <p class="card-text">INPC: {{ ipc_agrege_sum }}</p>
             </div>
         </div>
     </div>

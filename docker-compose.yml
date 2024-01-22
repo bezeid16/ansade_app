@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  siddb:
+    container_name: siddb
+    image: mysql
+    ports:
+      - "127.0.0.1:3316:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=sid2023
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8 --collation-server=utf8_general_ci
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+  sidweb:
+    container_name: sidweb
+    build: .
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./sid32_2023:/app
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      siddb:
+        condition: service_healthy
+  mruweb:
+    container_name: mruweb
+    build: .
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./mru:/app
+    ports:
+      - "127.0.0.1:9000:8000"
+    depends_on:
+      siddb:
+        condition: service_healthy

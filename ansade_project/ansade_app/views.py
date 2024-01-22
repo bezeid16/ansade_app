@@ -41,7 +41,7 @@ class PricePredictionView(View):
         # Entraînement du modèle
         model.fit(X_train, y_train)
 
-        # Prédiction sur les données de test
+
         predictions = model.predict(X_test)
 
         # Calcul de la performance du modèle (à titre informatif)
@@ -51,43 +51,60 @@ class PricePredictionView(View):
         future_dates = [[date] for date in range(dates[-1][0] + 1, dates[-1][0] + 31)]
         future_predictions = model.predict(future_dates)
 
+        predictions_list = [{'date': date, 'actual_price': actual_price, 'predicted_price': predicted_price} 
+                    for date, actual_price, predicted_price in zip(X_test, y_test, predictions)]
+
+        future_predictions_list = [{'date': date, 'predicted_price': predicted_price} 
+                        for date, predicted_price in zip(future_dates, future_predictions)]
+
+
+
+        
         context = {
-            'predictions': list(predictions),
-            'future_predictions': list(future_predictions),
-            'accuracy': accuracy,
-        }
+                    'predictions': predictions_list,
+                    'future_predictions': future_predictions_list,
+                    'accuracy': accuracy,
+                }
+
 
         return render(request, self.template_name, context)
 
 def calculate_inpc(request):
     paniers = Panier.objects.all()
 
+    # Supposons que le panier sélectionné est le premier panier de la liste
     panier_selected = paniers.first()
 
     total_cost_current = 0.0
     total_cost_base = 0.0
 
+    # Récupérez la première date présente dans le modèle Price
     base_date = Price.objects.earliest('date').date
 
-    produits_panier = PanierProduit.objects.filter(panier=panier_selected)
-    for panier_produit in produits_panier:
-        prix_actuel = Price.objects.filter(produit=panier_produit.price.produit, date__lte=panier_produit.price.date).latest('date')
-        cost_product_current = prix_actuel.value * panier_produit.ponderation
-        total_cost_current += cost_product_current
+    # Calcul de la somme du coût actuel pour tous les paniers
+    for panier in paniers:
+        produits_panier = PanierProduit.objects.filter(panier=panier)
+        for panier_produit in produits_panier:
+            prix_actuel = Price.objects.filter(produit=panier_produit.price.produit, date__lte=panier_produit.price.date).latest('date')
+            cost_product_current = prix_actuel.value * panier_produit.ponderation
+            total_cost_current += cost_product_current
 
+    # Calcul de la somme du coût total des paniers à la date de référence (base)
     produits_base = PanierProduit.objects.filter(panier=panier_selected, price__date=base_date)
     for produit_base in produits_base:
         total_cost_base += produit_base.price.value * produit_base.ponderation
 
+    # Vérifiez si total_cost_base est différent de zéro avant de calculer l'IPC
     if total_cost_base != 0:
-        ipc_agrege = (total_cost_current / total_cost_base) * 100
+        # Calculez la somme des IPC agrégés
+        ipc_agrege_sum = (total_cost_current / total_cost_base) * 100
     else:
-        ipc_agrege = 0.0  
+        # Gérez le cas où total_cost_base est égal à zéro (par exemple, attribuez une valeur par défaut à la somme des IPC agrégés)
+        ipc_agrege_sum = 0.0  # Choisissez une valeur appropriée
 
     context = {
         'paniers': paniers,
-        'panier_selected': panier_selected,
-        'ipc_agrege': ipc_agrege,
+        'ipc_agrege_sum': ipc_agrege_sum,
     }
 
     return render(request, 'calculate_inpc.html', context)
